@@ -16,7 +16,7 @@ env:
 
 jobs:
   build:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     steps:
     - name: Checkout
       uses: actions/checkout@master
@@ -33,6 +33,7 @@ jobs:
         sudo curl --create-dirs -L -o /usr/local/bin/repo -O -L https://storage.googleapis.com/git-repo-downloads/repo
         sudo chmod a+rx /usr/local/bin/repo
         sudo apt-get install libgl1-mesa-glx
+        pip install git+https://github.com/giswqs/whitebox
     - name: Build
       run: |
        git config --global user.name "Gofaraway71"
