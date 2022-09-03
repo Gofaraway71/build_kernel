@@ -1,1 +1,39 @@
 
+kind: pipeline
+
+steps:
+- name: build
+  image: atomxorg/arch-linux:kernel
+  environment:
+    HEAD:
+      from_secret: HEAD
+  commands:
+  - git config --global user.name "Gofaraway71"
+  - git config --global user.email "aalbatron@gmail.com"
+  - git clone https://github.com/rama982/clang "$HOME/clang" --depth=1 >/dev/null
+  - git clone https://github.com/osm0sis/AnyKernel3 "$HOME/anykernel" --depth=1
+  - sed -i -e 's/devicecheck=1/devicecheck=0/' -e '/block/d' "$HOME/anykernel/anykernel.sh"
+  - mkdir "$HOME/kernel"
+  - cd "$HOME/kernel"
+  - git init >/dev/null
+  - git fetch https://github.com/realme-mt6785-devs/android_kernel_realme_mt6785 "$HEAD" --depth=1
+  - git reset --hard FETCH_HEAD >/dev/null
+  - export PATH="$HOME/clang/bin:$PATH"
+  - export ARCH=arm64
+  - export KBUILD_BUILD_USER="Gofaraway71"
+  - make RM6785_defconfig O="$HOME/out"
+  - make -j "$(nproc --all)" O="$HOME/out" CC="clang" \
+    LD=ld.lld AR=llvm-ar NM=llvm-nm OBJCOPY=llvm-objcopy OBJDUMP=llvm-objdump STRIP=llvm-strip \
+    CROSS_COMPILE=aarch64-linux-gnu-
+  - KERNEL_IMAGE="$HOME/out/arch/arm64/boot/Image.gz"
+  - if ! [ -e "$KERNEL_IMAGE" ]; then exit; fi
+  - cp -v "$KERNEL_IMAGE" "$HOME/anykernel"
+  - cd "$HOME/anykernel"
+  - ZIPNAME="RM6785-kernel-ci-$(date -u +%Y%m%d_%H%M).zip"
+  - zip -r "$ZIPNAME" *
+  - curl -T "$ZIPNAME" https://free.keep.sh
+
+trigger:
+  event:
+  - custom
+  - push
