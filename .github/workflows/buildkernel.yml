@@ -23,7 +23,6 @@ jobs:
 
     - name: Initializing environment
       run: |
-        sudo rm -rf /usr/share/dotnet /etc/mysql /etc/php /etc/apt/sources.list.d
         git config --global user.name "Gofaraway71"
         git config --global user.email "aalbatron.com"
 
