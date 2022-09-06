@@ -25,6 +25,10 @@ jobs:
       run: |
         git config --global user.name "Gofaraway71"
         git config --global user.email "aalbatron.com"
+        mkdir ~/bin
+        PATH=~/bin:$PATH
+        curl https://storage.googleapis.com/git-repo-downloads/repo > ~/bin/repo
+        chmod a+x ~/bin/repo
         sudo apt-get install repo 
         sudo -E apt-get clean
         sudo -E apt-get -qq update
