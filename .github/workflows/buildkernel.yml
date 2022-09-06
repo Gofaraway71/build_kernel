@@ -23,14 +23,16 @@ jobs:
 
     - name: Initializing environment
       run: |
+        mkdir ~/bin
+        mkdir ~/bin/repo
+        PATH=~/bin:$PATH
         chmod a+x ~/bin/repo
         sudo apt update
         sudo apt install git
         sudo apt-get -y install repo 
         git config --global user.name "Gofaraway71"
         git config --global user.email "aalbatron.com"
-        mkdir ~/bin
-        PATH=~/bin:$PATH
+
         curl https://storage.googleapis.com/git-repo-downloads/repo > ~/bin/repo
 
         sudo -E apt-get clean
