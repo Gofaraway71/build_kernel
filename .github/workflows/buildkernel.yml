@@ -31,14 +31,9 @@ jobs:
         sudo apt install git
         git config --global user.name "Gofaraway71"
         git config --global user.email "aalbatron.com"
-
-        curl https://storage.googleapis.com/git-repo-downloads/repo > ~/bin/repo
-
         sudo -E apt-get clean
         sudo -E apt-get -qq update
         sudo -E apt-get -qq install bc build-essential zip curl libstdc++6 git wget python gcc clang libssl-dev repo rsync flex bison aria2
-        sudo curl --create-dirs -L -o /usr/local/bin/repo -O -L https://storage.googleapis.com/git-repo-downloads/repo
-        sudo chmod a+rx /usr/local/bin/repo
         sudo apt-get install libgl1-mesa-glx
 
     - name: "Android kernel build"
