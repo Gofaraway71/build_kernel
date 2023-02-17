@@ -29,7 +29,6 @@ jobs:
         chmod a+x ~/bin/repo
         sudo apt update
         sudo apt install git
-        sudo apt-get -y install repo 
         git config --global user.name "Gofaraway71"
         git config --global user.email "aalbatron.com"
 
