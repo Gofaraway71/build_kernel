@@ -15,7 +15,7 @@ steps:
   - mkdir "$HOME/kernel"
   - cd "$HOME/kernel"
   - git init >/dev/null
-  - git fetch https://github.com/realme-mt6785-devs/android_kernel_realme_mt6785 "$HEAD" --depth=1
+  - git fetch https://github.com/Gofaraway71/android_kernel_realme_mt6785-1 "$HEAD" --depth=1
   - git reset --hard FETCH_HEAD >/dev/null
   - export PATH="$HOME/clang/bin:$PATH"
   - export ARCH=arm64
