@@ -41,24 +41,17 @@ jobs:
         sudo curl --create-dirs -L -o /usr/local/bin/repo -O -L https://storage.googleapis.com/git-repo-downloads/repo
         sudo chmod a+rx /usr/local/bin/repo
         sudo apt-get install libgl1-mesa-glx
+
+    - name: "Android kernel build"
+      uses: lemniskett/android-kernel-actions@master
+      id: build
+      with:
+        arch: arm64
+        compiler: gcc/9
+        defconfig: RM6785_defconfig
+        image: Image.gz-dtb
         
-    - name: Build
-      run: |
-       git clone https://github.com/rama982/clang "$HOME/clang" --depth=1 >/dev/null
-       git clone https://github.com/osm0sis/AnyKernel3 "$HOME/anykernel" --depth=1
-       sed -i -e 's/devicecheck=1/devicecheck=0/' -e '/block/d' "$HOME/anykernel/anykernel.sh"
-       mkdir "$HOME/kernel"
-       cd "$HOME/kernel"
-       git init >/dev/null
-       git fetch https://github.com/realme-mt6785-devs/android_kernel_realme_mt6785 "$HEAD" --depth=1
-       git reset --hard FETCH_HEAD >/dev/null
-       export PATH="$HOME/clang/bin:$PATH"
-       export ARCH=arm64
-       export KBUILD_BUILD_USER="Gofaraway71"
-       make RM6785_defconfig O="$HOME/out"
-       make -j "$(nproc --all)" O="$HOME/out" CC="clang" \
-       LD=ld.lld AR=llvm-ar NM=llvm-nm OBJCOPY=llvm-objcopy OBJDUMP=llvm-objdump STRIP=llvm-strip \
-       CROSS_COMPILE=aarch64-linux-gnu-
+    - name: load   
        KERNEL_IMAGE="$HOME/out/arch/arm64/boot/Image.gz"
        if ! [ -e "$KERNEL_IMAGE" ]; then exit; fi
        cp -v "$KERNEL_IMAGE" "$HOME/anykernel"
