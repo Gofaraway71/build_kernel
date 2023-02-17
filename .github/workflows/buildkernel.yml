@@ -44,14 +44,14 @@ jobs:
 
     - name: "Android kernel build"
       uses: lemniskett/android-kernel-actions@master
-      id: build
       with:
         arch: arm64
         compiler: gcc/9
         defconfig: RM6785_defconfig
         image: Image.gz-dtb
-        
-    - name: load   
+
+    - name: "Android kernel load"
+      run: |   
        KERNEL_IMAGE="$HOME/out/arch/arm64/boot/Image.gz"
        if ! [ -e "$KERNEL_IMAGE" ]; then exit; fi
        cp -v "$KERNEL_IMAGE" "$HOME/anykernel"
