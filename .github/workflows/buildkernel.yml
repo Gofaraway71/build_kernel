@@ -30,6 +30,7 @@ jobs:
        - name: Sync recovery source and device tree
          run: |
              cd ~
+             rm -rf work
              mkdir work
              cd work
              git clone $KS_LINK --depth=1 kernel
