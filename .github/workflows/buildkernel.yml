@@ -27,8 +27,8 @@ jobs:
          run: |
             cd ~
             cd kernel
-            chmod 0777 merlin.sh
-            ./merlin.sh
+            chmod 0777 build.sh
+            ./build.sh
             
        - name: Kernel
          uses: actions/upload-artifact@v3
