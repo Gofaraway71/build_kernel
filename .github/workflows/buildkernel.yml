@@ -21,7 +21,7 @@ jobs:
             git clone https://github.com/rama982/AnyKernel3 --depth=1 AnyKernel3-master
             mkdir clang-13
             cd clang-13
-            git clone https://github.com/vijaymalav564/vortex-clang.git -b master --depth=1 aaa
+
             
        - name: Build Kernel 
          run: |
